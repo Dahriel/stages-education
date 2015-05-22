@@ -9,6 +9,7 @@ module.exports = {
     },
     files: {
       '<%= repertoires.distribution %>public/index.html': [
+        '<%= repertoires.distribution %>public/scripts/route.js',
         '<%= repertoires.distribution %>public/scripts/app.js',
         '<%= repertoires.distribution %>public/scripts/app.config.js',
         '<%= repertoires.distribution %>public/scripts/**/*.js'

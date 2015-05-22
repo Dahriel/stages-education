@@ -1,5 +1,11 @@
 (function() {
-  angular.module('baseApp', ['ngRoute', 'ngResource']);
+  var app;
+
+  app = angular.module('baseApp', ['ui.router', 'ui.router', 'ngAnimate', 'foundation']);
+
+  app.controller('BaseController', function($scope) {
+    return $scope.notification = 4;
+  });
 
 }).call(this);
 
@@ -8,28 +14,29 @@
 
   baseApp = angular.module("baseApp");
 
-  baseApp.run([
-    '$rootScope', '$location', 'Authentification', function($rootScope, $location, Authentification) {
-      return $rootScope.$on('$routeChangeStart', function(event, next) {
-        if (next) {
-          if (next.authentificationRequise && !Authentification.estAuthentifie()) {
-            event.preventDefault();
-            return $location.path('/connexion').search({
-              returnUrl: next.originalPath
-            });
-          }
-        }
-      });
-    }
-  ]);
-
-  baseApp.config([
-    '$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
-      $httpProvider.interceptors.push('AuthIntercepteur');
-      return $routeProvider.otherwise({
-        templateUrl: 'app/404/index.html'
-      });
-    }
-  ]);
+  baseApp.config(function($urlRouterProvider, $locationProvider, $stateProvider) {
+    $stateProvider.state('accueil', {
+      url: '/',
+      templateUrl: 'app/accueil/index.html',
+      animation: {
+        enter: 'fadein',
+        leave: 'slideOutRight'
+      }
+    });
+    $stateProvider.state('dossiers-stage', {
+      url: '/dossiers-stage',
+      templateUrl: 'app/dossiers-stage/index.html',
+      controller: 'DossierController',
+      animation: {
+        enter: 'slideInRight',
+        leave: 'slideOutRight'
+      }
+    });
+    $urlRouterProvider.otherwise('/');
+    return $locationProvider.html5Mode({
+      enabled: false,
+      requireBase: false
+    });
+  });
 
 }).call(this);

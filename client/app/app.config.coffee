@@ -1,20 +1,23 @@
 baseApp = angular.module "baseApp"
 
-baseApp.run(['$rootScope', '$location', 'Authentification',
-  ($rootScope, $location, Authentification) ->
-    $rootScope.$on('$routeChangeStart', (event, next) ->
-      if (next)
-        if (next.authentificationRequise && !Authentification.estAuthentifie())
-          event.preventDefault()
-          $location.path('/connexion').search({returnUrl: next.originalPath})
-    )
-])
+baseApp.config ($urlRouterProvider, $locationProvider, $stateProvider) ->
+  $stateProvider.state 'accueil',
+    url: '/',
+    templateUrl: 'app/accueil/index.html',
+    animation:
+      enter: 'fadein',
+      leave: 'slideOutRight'
 
-baseApp.config(['$routeProvider', '$httpProvider',
-  ($routeProvider, $httpProvider) ->
-    $httpProvider.interceptors.push('AuthIntercepteur');
-    $routeProvider.
-    otherwise({
-        templateUrl: 'app/404/index.html'
-      });
-]);
+  $stateProvider.state 'dossiers-stage',
+    url: '/dossiers-stage',
+    templateUrl: 'app/dossiers-stage/index.html',
+    controller: 'DossierController'
+    animation:
+      enter: 'slideInRight',
+      leave: 'slideOutRight'
+
+  $urlRouterProvider.otherwise '/'
+  $locationProvider.html5Mode({
+    enabled: false,
+    requireBase: false
+  })

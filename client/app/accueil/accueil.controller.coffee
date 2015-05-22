@@ -1,9 +1,9 @@
 baseApp = angular.module 'baseApp'
 
-AccueilController = ($scope, $routeParams, Authentification) ->
-  if ($routeParams.token)
-    Authentification.setToken($routeParams.token);
+AccueilController = ($scope) ->
+  $scope.pop = ()->
+    alert 'Pop'
 
-AccueilController.$inject = ['$scope', '$routeParams', 'Authentification']
+AccueilController.$inject = ['$scope']
 
 baseApp.controller('AccueilController', AccueilController)

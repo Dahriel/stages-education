@@ -4,7 +4,7 @@ module.exports =
     options: {
       style: 'expanded',
       trace: false,
-      loadPath: 'client/bower_components/foundation/scss/'
+      loadPath: 'client/bower_components/foundation-apps/scss/'
     },
     files: [
       {
